@@ -11,6 +11,10 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/', 'UserController@home');
+$router->get('/sign-in', 'UserController@signIn');
+$router->get('/sign-up', 'UserController@signUp');
+
+
+$router->post('/sign-in', 'UserController@signIn');
+$router->post('/sign-up', 'UserController@signUp');
