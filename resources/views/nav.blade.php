@@ -8,12 +8,20 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/sign-in">Connnexion</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/sign-up">Inscription</a>
-            </li>
+            @if(empty($_SESSION))
+                <li class="nav-item">
+                    <a class="nav-link" href="/sign-in">Connexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/sign-up">Inscription</a>
+                </li>
+            @endif
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            @if(!empty($_SESSION))
+                <li class="nav-item"><button class="btn btn-secondary">{{$_SESSION['pseudo']}}</button></li>
+                <li><a href="/logout"><button class="btn btn-danger">Se deconnecter</button></a></li>
+            @endif
         </ul>
     </div>
 </nav>

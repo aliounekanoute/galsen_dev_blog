@@ -30,12 +30,14 @@ class UserController extends Controller
 
             $message = '';
             if($user != null) {
-                $message = 'ok';
+                $_SESSION['id'] = $user->getId();
+                $_SESSION['pseudo'] = $user->getPseudo();
+                $message = '0';
             } else {
-                $message = 'pseudo ou mpd incorrect';
+                $message = '1';
             }
 
-            return $message;
+            return response()->json($message);
         }
 
     }
@@ -50,22 +52,23 @@ class UserController extends Controller
 
             $message = '';
 
-            /**
-             * @todo Rediriger vers une vue adéquate
-             */
-
             try {
                 $this->getEntityManager()->persist($user);
                 $this->getEntityManager()->flush();
-                $message = 'OK';
+                $message = '0';
             } catch (\Exception $e){
-                $message = $e->getMessage();
+                $message = '1';
             }
 
-            return  $message;
+            return  response()->json($message);
 
         }
 
+    }
+
+    public function logout() {
+        $this->getSessionManager()->stop();
+        return redirect('/');
     }
 
 }

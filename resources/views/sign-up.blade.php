@@ -8,7 +8,7 @@
 @include('nav')
 <div class="container">
     <h2>Formulaire d'inscription</h2>
-    <form method="post" action="/sign-up">
+    <form method="post" id="signupForm">
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="text" class="form-control" name="pseudo" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
@@ -22,8 +22,52 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div>
-        <input type="submit" class="btn btn-primary" value="S'inscrire">
+        <button type="submit" class="btn btn-primary">S'incrire</button>
     </form>
+
+    <script>
+        $('#signupForm').submit((e)=> {
+            e.preventDefault();
+            let formData = new FormData(e.target);
+
+            $.ajax({
+                url: '/sign-up',
+                type: 'POST',
+                data: formData,
+                async: true,
+                success: (response) => {
+                    switch (response) {
+                        case '0':
+                            swal({
+                                title: 'Inscription',
+                                icon: 'success',
+                                text: 'L\'inscription est passée avec succés'
+                            }).then(()=> {
+                                window.location.href = '/sign-in';
+                            });
+                            break;
+                        case '1':
+                            swal({
+                                title: 'Inscription',
+                                icon: 'error',
+                                text: 'Une erreur est survenue'
+                            });
+                            break;
+                    }
+                },
+                cache: false,
+                contentType: false,
+                processData: false,
+                error: (error) => {
+                    swal({
+                        title: 'Inscription',
+                        icon: 'error',
+                        text: error
+                    });
+                }
+            });
+        });
+    </script>
 </div>
 
 </body>

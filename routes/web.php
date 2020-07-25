@@ -14,7 +14,10 @@
 $router->get('/', 'UserController@home');
 $router->get('/sign-in', 'UserController@signIn');
 $router->get('/sign-up', 'UserController@signUp');
+$router->get('/logout', 'UserController@logout');
 
 
 $router->post('/sign-in', 'UserController@signIn');
 $router->post('/sign-up', 'UserController@signUp');
+
+$router->post('/addArticle', 'ArticleController@addArticle');
